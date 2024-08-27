@@ -1,0 +1,30 @@
+spring:
+  kafka:
+    bootstrap-servers: pkc-60py3.europe-west9.gcp.confluent.cloud:9092
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='4QGIWQPIMKJRJ6GN' password='uE0bh7x4HU8UXsrE4U5U8rDs5DjrsTyK9Vr1+B+baDzCXAgi8tkuAOrLs1l6RWty';
+        mechanism: PLAIN
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  datasource:
+    url: jdbc:postgresql://localhost:5432/articles
+    username: root
+    password: root
+    init-mode: always
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl.auto: update
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true

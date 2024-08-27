@@ -1,0 +1,31 @@
+version: '3.3'
+services:
+  postgres_db:
+    image: postgres:8
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 127.0.0.1:3000:5432
+    environment:
+      - POSTGRES_PASSWORD=homepedia
+      - POSTGRES_DB=homepedia
+      - POSTGRES_USER=homepedia
+    volumes:
+      - ./data_db:/var/lib/postgresql/data
+        #      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mongo_db:
+    image: mongo:8.0.0-rc11
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: homepedia
+      MONGO_INITDB_ROOT_PASSWORD: homepedia
+
+
+volumes:
+  data_db:
+  mongo-data:

@@ -1,0 +1,36 @@
+.authPage {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  .passwords-inputs {
+    width: -webkit-fill-available;
+
+    input {
+      width: -webkit-fill-available;
+    }
+  }
+}
+
+.logoAuth {
+  width: 20vw;
+  max-width: 200px;
+  min-width: 100px;
+}
+
+.flexRowWrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+
+  span {
+    width: -webkit-fill-available;
+    max-width: 45%;
+  }
+}

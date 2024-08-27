@@ -1,0 +1,78 @@
+version: "3.8"
+
+services:
+    front-dev:
+        container_name: front-crypto-viz-dev
+        stdin_open: true
+        build:
+            dockerfile: Dockerfile
+            context: ./CryptoViz_Front
+            args:
+                VUE_APP_API_URL: http://localhost:8081
+        networks:
+            - dev
+        volumes:
+            - /CryptoViz_Front/node_modules
+            - ./CryptoViz_Front:/CryptoViz_Front
+        ports:
+            - "8081:8080"
+        image: crypto-viz_front-front:dev
+        environment: # Vous pouvez ajouter des variables d'environnement pour configurer le hot-reloading
+            - CHOKIDAR_USEPOLLING=true # Ceci est important pour le hot-reloading fonctionne dans certains environnements Docker
+
+    db-dev:
+        container_name: db_dev
+        image: postgres:13-alpine
+        environment:
+            - POSTGRES_USERNAME=postgres
+            - POSTGRES_PASSWORD=a8JcQ2tS5eX9mB4vF7uZ0pL6kD3xR1yW8nE6gH5j
+            - POSTGRES_DB=postgres
+            - POSTGRES_PORT=5432
+        volumes:
+            - ./postgres-data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD", "pg_isready", "-d", "postgres", "-U", "postgres"]
+            interval: 5s
+            timeout: 45s
+            retries: 5
+        ports:
+            - "5432:5432"
+        networks:
+            - db_dev
+        # restart: always # Ajout de l'option restart
+
+    api-dev:
+        image: crypto-viz_backend:dev
+        container_name: api-dev
+        build:
+            context: ./CryptoViz_Back
+            dockerfile: Dockerfile
+        ports:
+            - "8001:8000"
+        environment:
+            - POSTGRES_USERNAME=postgres
+            - POSTGRES_PASSWORD=a8JcQ2tS5eX9mB4vF7uZ0pL6kD3xR1yW8nE6gH5j
+            - POSTGRES_DB=postgres
+            - POSTGRES_PORT=5432
+            - SECRET_KEY=ZXpmemZrLGV6ayxhYWE=
+            - IS_DEV=true
+        depends_on:
+            db-dev:
+                condition: service_healthy
+        volumes:
+            - ./CryptoViz_Back:/app
+        networks:
+            - main_dev
+            - db_dev
+        restart: always # Ajout de l'option restart
+
+networks:
+    main_dev:
+        driver: bridge
+    db_dev:
+        driver: bridge
+    dev:
+        driver: bridge
+
+volumes:
+    postgres-data:

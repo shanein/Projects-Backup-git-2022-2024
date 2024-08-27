@@ -1,0 +1,17 @@
+repos:
+    # Hook personnalisé pour la vérification des messages de commit
+    - repo: local
+      hooks:
+          - id: commit-message-check
+            name: "Check commit message format"
+            entry: python3 scripts/commit-msg-check.py
+            language: system
+            stages: [commit-msg]
+
+    # Black pour le formatage de code
+    - repo: https://github.com/psf/black
+      rev: 22.3.0 # Assurez-vous d'utiliser la dernière version disponible
+      hooks:
+          - id: black
+            args: [--check]
+            language_version: python3.10

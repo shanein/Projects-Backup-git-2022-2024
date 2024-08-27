@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+    db-dev:
+        container_name: db_dev
+        image: postgres:13-alpine
+        environment:
+            - POSTGRES_USERNAME=postgres
+            - POSTGRES_PASSWORD=a8JcQ2tS5eX9mB4vF7uZ0pL6kD3xR1yW8nE6gH5j
+            - POSTGRES_DB=postgres
+            - POSTGRES_PORT=5432
+        volumes:
+            - ./postgres-data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD", "pg_isready", "-d", "postgres", "-U", "postgres"]
+            interval: 5s
+            timeout: 45s
+            retries: 5
+        ports:
+            - "5432:5432"
+        networks:
+            - db_dev
+
+    api-dev:
+        image: adapt-ia_backend:dev
+        container_name: api-dev
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        ports:
+            - "8081:8080"
+        environment:
+            - POSTGRES_USERNAME=postgres
+            - POSTGRES_PASSWORD=a8JcQ2tS5eX9mB4vF7uZ0pL6kD3xR1yW8nE6gH5j
+            - POSTGRES_DB=postgres
+            - POSTGRES_PORT=5432
+            - SECRET_KEY=ZXpmemZrLGV6ayxhYWE=
+            - IS_DEV=true
+        depends_on:
+            db-dev:
+                condition: service_healthy
+        volumes:
+            - ./backend:/app
+        networks:
+            - main_dev
+            - db_dev
+        restart: always # Ajout de l'option restart
+
+networks:
+    main_dev:
+        driver: bridge
+    db_dev:
+        driver: bridge
+
+volumes:
+    postgres-data:

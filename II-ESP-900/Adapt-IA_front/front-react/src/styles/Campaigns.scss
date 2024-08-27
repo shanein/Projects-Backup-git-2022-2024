@@ -1,0 +1,12 @@
+#campaigns-table {
+  margin: 30px auto 0 auto;
+  max-width: calc(100vw - 230px);
+}
+
+.modal-centered {
+  display: flex;
+  flex-direction: column;
+  /* margin-top: auto !important; */
+  /* margin-bottom: auto; */
+  height: -webkit-fill-available;
+}

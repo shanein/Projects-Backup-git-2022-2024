@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  /*font-family: 'Quicksand', sans-serif !important;*/
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* index.css */
+ul li a {
+  color: #000;
+}
+
+ul li a:hover {
+  color: #00a8ff;
+}
+
+ul li a.active {
+  color: #00a8ff;
+}

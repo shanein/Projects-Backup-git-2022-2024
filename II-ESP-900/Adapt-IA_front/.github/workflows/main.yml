@@ -1,0 +1,61 @@
+name: PROD - Build & Deploy SSH
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: 18.x
+
+      - name: Navigate to front directory and install dependencies
+        run: npm install
+        working-directory: ./front-react
+
+      # - name: Run tests
+      #   run: npm run test --detectOpenHandles
+      #   working-directory: ./backend/app
+
+      - name: Build application
+        run: npm run build
+        working-directory: ./front-react
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: testing
+    if: success() && github.event.pull_request.merged == true
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE }}
+          script: |
+            cd ~/Projects/SmartDisplay/front/Adapt-IA_front
+            docker stop front-adapt-ai
+            docker rm front-adapt-ai
+            docker system prune -a
+            git pull
+            docker compose --env-file ./.prod.env -f docker-compose.prod.yml build --no-cache
+            docker compose --env-file ./.prod.env -f docker-compose.prod.yml up -d
+
+          # docker compose --no-cache -f docker-compose.prod.yml up --build -d
+
+          # docker compose -f docker-compose.prod.yml build --no-cache
+          # docker compose -f docker-compose.prod.yml up -d
