@@ -1,0 +1,44 @@
+name: Test Project
+
+on:
+    pull_request:
+        branches:
+            - dev
+
+jobs:
+    format:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              # with:
+              #     ref: v2
+            - name: Set up Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: "3.8"
+            - name: Install Black
+              run: pip install black
+            - name: Run Black
+              run: black --check .
+    testing:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Set up FastAPI environment
+              uses: actions/setup-python@v2
+              # with:
+              #     python-version: 3.10.0
+            - name: Navigate to front directory and install dependencies
+              run: pip install -r requirements.txt
+              working-directory: ./backend/
+
+            # Install unicorn
+            - name: Install unicorn
+              run: pip install uvicorn
+
+            - name: Build application
+              run: |
+                  docker build -t adapt-ia-dev .
+              working-directory: ./backend/

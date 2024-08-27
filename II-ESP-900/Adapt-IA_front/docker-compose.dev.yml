@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  front-dev:
+    container_name: front-adapt-ai-dev
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile
+      context: ./front-react
+
+    networks:
+      - dev
+    volumes:
+      - /front-react/node_modules
+      - ./front-react:/front-react
+    ports:
+      - "3001:3000"
+    image: adapt-ia_front-front:dev
+    environment: # Vous pouvez ajouter des variables d'environnement pour configurer le hot-reloading
+      - CHOKIDAR_USEPOLLING=true # Ceci est important pour le hot-reloading fonctionne dans certains environnements Docker
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+      - HOST=0.0.0.0
+      - PORT=3000
+      - WDS_SOCKET_PORT=3001
+
+    # restart: on-failure
+    restart: unless-stopped
+
+networks:
+  dev:
+    driver: bridge

@@ -1,0 +1,45 @@
+{
+  "countries": {
+    "countryId1": {
+      "name": "France",
+      "population": 67000000,
+      "averagePropertyPrice": 250000,
+      "regions": {
+        "regionId1": {
+          "code": "11",
+          "name": "Île-de-France",
+          "population": 12278210,
+          "averagePropertyPrice": 400000,
+          "geoshape": {
+            "type": "Polygon",
+            "coordinates": [[[2.224199,48.815573], [2.469920,48.815573], [2.469920,48.902144], [2.224199,48.902144], [2.224199,48.815573]]]
+          },
+          "departments": {
+            "departmentId1": {
+              "code": "75",
+              "name": "Paris",
+              "population": 2140526,
+              "averagePropertyPrice": 1000000,
+              "geoshape": {
+                "type": "Polygon",
+                "coordinates": [[[2.224199,48.815573], [2.469920,48.815573], [2.469920,48.902144], [2.224199,48.902144], [2.224199,48.815573]]]
+              },
+              "communes": {
+                "communeId1": {
+                  "name": "Paris",
+                  "population": 2140526,
+                  "averagePropertyPrice": 1000000,
+                  "postalCode": "75000",
+                  "geoshape": {
+                    "type": "Polygon",
+                    "coordinates": [[[2.224199,48.815573], [2.469920,48.815573], [2.469920,48.902144], [2.224199,48.902144], [2.224199,48.815573]]]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+    "unique_people_counter": 0,
+    "people_info": {},
+    "frame_count": 0,
+    "speed_stats": [],
+    "speed_stats_statistics": {
+        "moy": null,
+        "med": null,
+        "eq_type": null
+    },
+    "config": {
+        "detection_interval": 10,
+        "prediction_interval": 20,
+        "inactive_threshold": 10,
+        "inactive_detection": 20
+    }
+}

@@ -1,0 +1,51 @@
+.homeContainer {
+  height: "100vh";
+  display: "flex";
+  flex-direction: "column";
+}
+
+.headerContainer {
+  flex: "0 1 65px";
+}
+
+.pageContainer {
+  flex: "1 1 auto";
+  display: "flex";
+  flex-direction: "row";
+  width: "-webkit-fill-available";
+}
+
+.navbarContainer {
+  flex: "0 1 200px";
+}
+
+.viewContainer {
+  flex: "1 1 auto";
+  background-color: "#f6f6f6";
+  border-radius: "20px 0 0 20px";
+  padding: "20px";
+}
+
+@media screen and (max-width: 768px) {
+  .navbarContainer {
+    flex: "0 1 200px";
+  }
+}
+
+/* CSS pour modifier la couleur du switch activé */
+.card .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider,
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover
+  .p-inputswitch-slider {
+  background-color: rgb(92, 105, 254);
+}
+
+.card
+  .date-start
+  button.p-button.p-component.p-datepicker-trigger.p-button-icon-only {
+  background: none;
+  border-left: none;
+  border-color: var(--purple-500);
+  border-bottom-right-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  color: var(--purple-500);
+}

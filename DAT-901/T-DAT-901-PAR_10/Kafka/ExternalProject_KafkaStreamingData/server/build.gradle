@@ -1,0 +1,62 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.jetbrains.kotlin.jvm'
+}
+
+group = 'com.data_901.server'
+version = '0.0.1-SNAPSHOT'
+
+java {
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		url "https://packages.confluent.io/maven"
+	}
+
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.java-websocket:Java-WebSocket:1.5.2'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.postgresql:postgresql'
+
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+	testImplementation 'org.awaitility:awaitility:3.1.2'
+
+	//from datatalk
+	implementation 'org.apache.kafka:kafka-clients:3.3.1'
+	implementation 'com.opencsv:opencsv:5.7.1'
+	implementation 'io.confluent:kafka-json-serializer:7.3.1'
+	implementation 'org.apache.kafka:kafka-streams:3.3.1'
+	implementation 'io.confluent:kafka-avro-serializer:7.3.1'
+	implementation 'io.confluent:kafka-schema-registry-client:7.3.1'
+	implementation 'io.confluent:kafka-streams-avro-serde:7.3.1'
+	implementation "org.apache.avro:avro:1.11.0"
+	testImplementation 'org.apache.kafka:kafka-streams-test-utils:3.3.1'
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+kotlin {
+	jvmToolchain(17)
+}

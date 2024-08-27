@@ -1,0 +1,30 @@
+.newActionBtnR {
+  position: relative;
+  top: -52px;
+  left: calc(100% - 165px);
+  margin-right: 10px;
+}
+
+.newActionBtnR2 {
+  position: absolute;
+  top: 110px;
+  right: 22px;
+  z-index: 10;
+}
+
+.returnBtnLeft {
+  position: absolute;
+  top: 110px;
+  right: 22px;
+  z-index: 10;
+}
+
+.dashboardContent {
+  position: relative;
+  /* Other styles for your content */
+}
+
+.inputFW {
+  width: -webkit-fill-available;
+  // padding: 0 2vw;
+}
