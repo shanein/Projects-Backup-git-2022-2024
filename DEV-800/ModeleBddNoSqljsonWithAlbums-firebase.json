@@ -1,0 +1,90 @@
+{
+   "users": {
+      "userId1": {
+         "email": "email1@example.com",
+         "firstName": "prénom1",
+         "lastName": "nom1",
+         "photos": {
+            "photoId1": {
+               "user": "userId1",
+               "url": "url_photo1",
+               //Photo partagée à :
+               "sharedWith": {
+                  "userId2": true,
+                  "userId3": true
+               }
+            },
+            "photoId2": {
+               "url": "url_photo2",
+               "sharedWith": {
+                  "userId3": true
+               }
+            }
+         },
+         //Photo que l'on m'a partagé :
+         "sharedPhotos": {
+            "photoId3": "userId2"
+         },
+         "albums": {
+            "albumId1": {
+               "name": "nom_album1",
+               "photos": {
+                  "photoId1": true,
+                  "photoId2": true
+               },
+               "sharedWith": {
+                  "userId2": true
+               }
+            }
+         },
+         "sharedAlbums": {
+            "albumId2": "userId2"
+         }
+      },
+      "userId2": {
+         "email": "email2@example.com",
+         "firstName": "prénom2",
+         "lastName": "nom2",
+         "photos": {
+            "photoId3": {
+               "url": "url_photo3",
+               "sharedWith": [
+                  "userId1",
+                  "userId3"
+            ]
+         },
+         "sharedPhotos": {
+            "photoId1": "userId1"
+         },
+         "albums": {
+            "albumId2": {
+               "name": "nom_album2",
+               "photos": {
+                  "photoId3": true
+               },
+               "sharedWith": {
+                  "userId1": true
+               }
+            }
+         },
+         "sharedAlbums": {
+            "albumId1": "userId1"
+         }
+      },
+      "userId3": {
+         "email": "email3@example.com",
+         "firstName": "prénom3",
+         "lastName": "nom3",
+         "photos": {},
+         "sharedPhotos": {
+            "photoId1": "userId1",
+            "photoId3": "userId2"
+         },
+         "albums": {},
+         "sharedAlbums": {
+            "albumId1": "userId1",
+            "albumId2": "userId2"
+         }
+      }
+   }
+}

@@ -1,0 +1,13 @@
+- name: Main playbook
+  hosts: server
+  vars_files:
+    - ./vault.yml
+  become: true
+  roles:
+    - role: roles/users
+    - role: roles/setup
+    - role: roles/packages
+    - role: roles/firewall
+    - role: roles/docker
+  vars:
+    username: default

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.example.myapplication.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/ListFragment" />
+
+        <action
+            android:id="@+id/action_FirstFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ListFragment"
+        android:name="com.example.myapplication.ListFragment"
+        android:label="@string/my_pictures"
+        tools:layout="@layout/fragment_list">
+
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_ListFragment_to_ListFragmentShared"
+            app:destination="@id/ListFragmentShared" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="com.example.myapplication.RegisterFragment"
+        android:label="@string/register_fragment_label"
+        tools:layout="@layout/fragment_register">
+
+        <action
+            android:id="@+id/action_RegisterFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment"
+            app:popUpTo="@id/FirstFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_RegisterFragment_to_SecondFragment"
+            app:destination="@id/ListFragment" />
+
+        <action
+            android:id="@+id/action_FirstFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ListFragmentShared"
+        android:name="com.example.myapplication.ListFragmentShared"
+        android:label="@string/my_shared_pictures"
+        tools:layout="@layout/fragment_list_shared">
+
+
+        <action
+            android:id="@+id/action_ListFragmentShared_to_ListFragment"
+            app:destination="@id/ListFragment" />
+    </fragment>
+
+</navigation>

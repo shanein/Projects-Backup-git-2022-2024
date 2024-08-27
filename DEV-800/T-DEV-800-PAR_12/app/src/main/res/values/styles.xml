@@ -1,0 +1,23 @@
+<resources>
+    <!-- Couleurs -->
+    <color name="colorPrimary">#00BFFF</color>
+    <color name="colorPrimaryDark">#0080FF</color>
+    <color name="colorAccent">#FFA500</color>
+    <color name="colorBackground">#F0F8FF</color>
+    <color name="colorText">#000000</color>
+
+    <!-- Styles -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Barre d'action -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Fond de l'application -->
+        <item name="android:windowBackground">@color/colorBackground</item>
+
+        <!-- Texte -->
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textColorHint">@color/colorText</item>
+    </style>
+</resources>

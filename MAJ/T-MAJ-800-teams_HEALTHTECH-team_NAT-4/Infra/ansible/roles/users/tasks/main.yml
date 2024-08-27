@@ -1,0 +1,41 @@
+---
+- name: Create a sudo "ansibleadmin" user for ansible tasks
+  user:
+    name: ansibleadmin
+    password: "{{ ansibleadmin_password | password_hash('sha512') }}"
+    createhome: yes
+    state: present
+    groups: sudo
+    append: yes
+    shell: /bin/bash
+
+- name: Create a "default" shared user as good practice
+  user:
+    name: default
+    password: "{{ default_password | password_hash('sha512') }}"
+    createhome: yes
+    state: present
+    shell: /bin/bash
+
+- name: Create ansibleadmin .ssh directory
+  file:
+    path: "/home/ansibleadmin/.ssh"
+    state: directory
+    mode: "0700"
+
+- name: Set authorized_keys file
+  authorized_key:
+    user: ansibleadmin
+    state: present
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC4SXTv1tlOlNfPk0BK3ffs7WN/4DIx5omMn2kYpezuwQeyG0J+w2tdz6hhMJP6OuuK5JVdE/j9c/wvsV7jnQEi0+MbG3nTcCB2LooUM/RiM4WkUQ9NdGUDfEFmQq/gzCwv2HP+Thg0WwFmgM1i5tuucknXjZjEjDfXlsEPQ8+4lExuaKGrBPUEv/BWe6F4qE8xRs/ze87LB+jKRZarnueyBj7QId+uNHp1FqXyxof2uLjvLn3kl1ij+lr0xfarr/VKeTX5IubPs/gcNSe3pN1pfsHuj4sqCqYK/gE64rk9wUk3DWGcGzxkBGMYBXC9+WqCcAkAqg+2ufppZr42JsllaHQPVpEyRSa7RqUP+5OmrR9y2+xDzpaZFenuoOsBNkOMT7JD4Q2XS+5Hc/NA5l9JqoCI32s1rtyrSCCYARnp9iARdKs7YAYC5m5NIAzYizPnsr2xsP7g56Ubq49DPuwdDk6T8TNGJcWA5mxRJTBnxNZD0XyHUoNKrK5R6MBR7W+cVP8A91TBno7q30ABi4WQkyO3wSl5XB4/ERyJYyiR5vhLH6W4aFtbkOfpfZgyz5EToowfmLIxJYKiebJAyOVpvqbhCBVshXSWxnOOKTbDeBiLutFrN5beW8q3NHMxxhggN5Za92TABSYGDf1NImEw98F2dP0e8r+YLXglalEDWQ== 
+
+- name: Restart SSH service
+  systemd:
+    name: sshd
+    state: restarted
+
+# USERS ACCOUNTS
+- name: Ensure group "devs" exists
+  ansible.builtin.group:
+    name: devs
+    state: present

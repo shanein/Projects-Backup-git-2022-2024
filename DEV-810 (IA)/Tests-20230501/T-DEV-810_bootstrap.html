@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Aurelien Pellet" />
+  <title>zoidberg2.0</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <base target="_blank">
+  
+  <style type="text/css">
+  /*
+    HEADER
+  */
+  
+  header {
+    height:500px;
+    background: url("images/cover_MSC.jpg") right bottom;
+    background-size: 45%;
+    margin:0px;
+    color: white;
+  }
+  
+  header h1 {
+    padding: 200px 0 0 30px;
+    text-transform: uppercase;
+    color: white;  
+    font-size: 60px;
+    margin:  0;
+  }
+  
+  header p.subtitle {
+    padding: 170px 0 0 30px;
+    margin:  0px;
+    padding-top: 0px;
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+  
+  header p.author {
+    display: none;
+  }
+  
+  
+  
+  
+  /*
+    BLOCKS
+  */
+  
+  .note {
+      border: solid 1px rgb(200, 200, 200);
+      box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+      border-radius:10px;    
+      padding: 10px 10px 10px 20px;
+      margin:30px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      background-color:rgba(255, 0, 0, 0.1);    
+  }
+  .note:before {
+    content: url(images/icon_note_small.png);
+    margin-top:-35px;
+    margin-left:-35px;
+    margin-bottom: -20px;
+  }
+  
+  .warning {
+      border: solid 1px rgb(200, 200, 200);
+      box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+      border-radius:10px;
+      margin:30px 20px 20px 20px;
+      background-color: rgba(88, 147, 193, 0.1);
+      padding: 10px 10px 10px 20px;
+      display: flex;
+      flex-direction: column;
+  }
+  .warning:before {
+    content: url(images/icon_warning_small.png);
+    margin-top:-35px;
+    margin-left:-35px;
+    margin-bottom: -20px;
+  }
+  
+  .info {
+      border: solid 1px rgb(200, 200, 200);
+      box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+      border-radius:10px;    
+      background-color: rgb(255, 255, 255);
+      padding: 10px 10px 10px 20px;
+      margin:30px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+  }
+  .info:before {
+    content: url(images/icon_info_small.png);
+    margin-top:-35px;
+    margin-left:-35px;
+    margin-bottom: -20px;
+  }
+  
+  .tip {
+      border: solid 1px rgb(200, 200, 200);
+      box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+      border-radius:10px;    
+      background-color: rgba(240, 220, 154, 0.1);
+      padding: 10px 10px 10px 20px;
+      margin:30px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+  }
+  .tip:before {
+    content: url(images/icon_tip_small.png);
+    margin-top:-35px;
+    margin-left:-35px;
+    margin-bottom: -20px;
+  }
+  
+  .terminal {
+      border: solid 1px rgb(200, 200, 200);
+      box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+      border-radius:10px;    
+      background-color: rgba(240, 220, 154, 0.1);
+      padding: 10px 10px 10px 20px;
+      margin:30px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+  }
+  .terminal:before {
+    content: url(images/icon_terminal_small.png);
+    margin-top:-35px;
+    margin-left:-35px;
+    margin-bottom: -20px;
+  }
+  
+  /*
+    QUOTE
+  */
+  
+  .quote {
+      border-left: solid 3px rgb(140, 140, 140);
+      border-radius:0 10px 10px 0;    
+      padding: 0px 0px 0px 20px;
+      margin:30px 40px 20px 40px;
+      display: flex;
+      flex-direction: column;
+      background-color:rgba(140, 140, 140, 0.1); 
+      position: relative;   
+  }
+  
+  .quote author {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-weight: bold;
+      font-style: normal;
+  }
+  .quote author:before {
+    content: '-- ';
+  }
+  .quote author:after {
+    content: '-- ';
+  }
+  
+  /*
+    COLUMNS
+  */
+  
+  div.column-33 {
+    width:  31%;
+    display: inline-block;
+    min-width: 120px;
+    vertical-align: middle;
+    padding-left:  15px;
+  }
+  div.column-50 {
+    width:  48%;
+    display: inline-block;
+    min-width: 120px;
+    vertical-align: middle;
+    padding-left:  15px;
+  }
+  div.column-66 {
+    width:  65%;
+    display: inline-block;
+    min-width: 120px;
+    vertical-align: middle;
+    padding-left:  15px;
+  }
+  div.column {
+    display: inline-block;
+    min-width: 120px;
+    vertical-align: middle;
+    padding-left:  15px;
+  }
+  div.columns {
+    padding-left:  -15px;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  
+  
+  
+  /*
+    FOOTER
+  */
+  
+  div.footer {
+    background: #FFFFFF url("images/footer_MSC.jpg") no-repeat;
+    height:  215px;
+  }
+  
+  
+  
+  
+  /*
+    GENERIC
+  */
+  
+  html {
+    font-size: 100%;
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  body {
+    color: #444;
+    font-family: Montserrat-thin, sans-serif;
+    font-size: 12px;
+    margin: auto;
+    padding:  0 10px 0 10px;
+    max-width: 800px;
+    background: #fefefe;
+  }
+  
+  a {
+    color: #016bb3;
+  
+  }
+  
+  a:visited {
+    color: #0b0080;
+  }
+  
+  a:hover {
+    color: #06e;
+  }
+  
+  a:active {
+    color: #faa700;
+  }
+  
+  a:focus {
+    outline: thin dotted;
+  }
+  
+  *::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+  
+  *::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000;
+  }
+  
+  a::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #016bb3;
+  }
+  
+  a::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #016bb3;
+  }
+  
+  p {
+    margin: 1em 0;
+  }
+  
+  img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  h1 {
+    color: #016bb3;
+    line-height: 100%;
+    margin-top: 2em;
+    font-weight: normal;
+    font-size: 3em;
+  }
+  
+  h2 {
+    color: #016bb3;
+    line-height: 110%;
+    margin-top: 2em;
+    font-weight: bold;
+  }
+  
+  h3, h4, h5, h6 {
+    color: #111;
+    line-height: 125%;
+    margin-top: 2em;
+    font-weight: normal;
+  }
+  
+  
+  blockquote {
+    color: #666666;
+    margin: 0;
+    padding-left: 3em;
+    border-left: 0.5em #EEE solid;
+  }
+  
+  hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #eee;
+    margin: 1em 0;
+    padding: 0;
+  }
+  
+  pre, code, kbd, samp {
+    color: #000;
+    font-family: monospace, monospace;
+    _font-family: 'courier new', monospace;
+    font-size: 0.98em;
+  }
+  
+  pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  b, strong {
+    font-weight: bold;
+  }
+  
+  dfn {
+    font-style: italic;
+  }
+  
+  ins {
+    background: #ff9;
+    color: #000;
+    text-decoration: none;
+  }
+  
+  mark {
+    background: #ff0;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+  }
+  
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  
+  sup {
+    top: -0.5em;
+  }
+  
+  sub {
+    bottom: -0.25em;
+  }
+  
+  ul, ol {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+  }
+  
+  li p:last-child {
+    margin-bottom: 0;
+  }
+  
+  ul ul, ol ol {
+    margin: .3em 0;
+  }
+  
+  dl {
+    margin-bottom: 1em;
+  }
+  
+  dt {
+    font-weight: bold;
+    margin-bottom: .8em;
+  }
+  
+  dd {
+    margin: 0 0 .8em 2em;
+  }
+  
+  dd:last-child {
+    margin-bottom: 0;
+  }
+  
+  img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+  }
+  
+  figure {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+  }
+  
+  figure img {
+    border: none;
+    margin: 0 auto;
+  }
+  
+  figcaption {
+    font-size: 0.8em;
+    font-style: italic;
+    margin: 0 0 .8em;
+  }
+  
+  table {
+    margin-bottom: 2em;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  table th {
+    padding: .2em 1em;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+  
+  table td {
+    padding: .2em 1em;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+  }
+  
+  .author {
+    font-size: 1.2em;
+    text-align: center;
+  }
+  
+  @media only screen and (min-width: 480px) {
+    body {
+      font-size: 14px;
+    }
+  }
+  @media only screen and (min-width: 768px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  @media print {
+    * {
+      background: transparent !important;
+      color: black !important;
+      filter: none !important;
+      -ms-filter: none !important;
+    }
+  
+    a, a:visited {
+      text-decoration: underline;
+    }
+  
+    hr {
+      height: 1px;
+      border: 0;
+      border-bottom: 1px solid black;
+    }
+  
+    a[href]:after {
+      content: " (" attr(href) ")";
+    }
+  
+    abbr[title]:after {
+      content: " (" attr(title) ")";
+    }
+  
+    .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+      content: "";
+    }
+  
+    pre, blockquote {
+      border: 1px solid #999;
+      padding-right: 1em;
+      page-break-inside: avoid;
+    }
+  
+    tr, img {
+      page-break-inside: avoid;
+    }
+  
+    img {
+      max-width: 100% !important;
+    }
+  
+    @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+  }
+  
+    @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+  }
+  
+    p, h2, h3 {
+      orphans: 3;
+      widows: 3;
+    }
+  
+    h2, h3 {
+      page-break-after: avoid;
+    }
+  }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">zoidberg2.0</h1>
+<p class="subtitle">Boostrap</p>
+<p class="author">Aurelien Pellet</p>
+</header>
+<h2 id="imports">Imports</h2>
+<p>Get your hands on a popular handwritten digits datababase called <strong>MNIST</strong>.<br />
+It should contain 4 datasets.<br />
+ <br />
+<span class="image">minst</span></p>
+<p>The <code>training set images</code> is of shape [60000,28,28]: find what that means<!--it contains 60,000 images of size 28x28-->.</p>
+<p>Each number represents a shade of grey for a specific pixel: coordinates [10,12,14] represent this value for the pixel in line twelve, fourteenth column of the tenth image.</p>
+<p>The <code>training set labels</code> contains one label for each one of the previous images.</p>
+<p>Now you are introduced with MNIST, let’s play with it:</p>
+<ul>
+<li><p>Create a class, import and load the datasets in four matrix <strong>with correct shapes</strong> ;</p></li>
+<li><p>Create a method to display basics statistics, like the distributions of each digit ;</p></li>
+<li><p>Create a method to display one desired image from a chosen dataset ;</p></li>
+<li><p>Each digit example has its own specificities: find a way to display the <em>mean</em> of each digit ;</p></li>
+<li><p>Use your class to create arrays and reshape the images datasets to size [n,28x28]=[n,784].</p></li>
+</ul>
+<div class="tip">
+<p>You can use the matplotlib library to show the digit using your favorite colormap.</p>
+</div>
+
+<p>Here, an example of the distribution of digits in both train and test</p>
+<table style="width:43%;">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">digits</th>
+<th style="text-align: right;">train</th>
+<th style="text-align: right;">test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5923</td>
+<td style="text-align: right;">980</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6742</td>
+<td style="text-align: right;">1135</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5958</td>
+<td style="text-align: right;">1032</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6131</td>
+<td style="text-align: right;">1010</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5842</td>
+<td style="text-align: right;">982</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5421</td>
+<td style="text-align: right;">892</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5918</td>
+<td style="text-align: right;">958</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6265</td>
+<td style="text-align: right;">1028</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5851</td>
+<td style="text-align: right;">974</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5949</td>
+<td style="text-align: right;">1009</td>
+</tr>
+</tbody>
+</table>
+<div class="tip">
+<p>Once you feel comfortable with this part, you may want to display your statistics with nicer libraries like <a href="https://seaborn.pydata.org/">seaborn</a> or <a href="https://plot.ly/">plotly</a></p>
+</div>
+<p> </p>
+<p><span class="image">distribution_train_digits</span></p>
+
+<h2 id="predictions">Predictions</h2>
+<p>Learning algorithm understands bidimensional matrix: each line represents an “individual” and columns represent its variables.</p>
+<p>In our study case, one variable is a specific pixel coded with its shade of black and white. This matrix is X.</p>
+<p>On the other side, the labels that you have to predict are ordered within a column called Y.</p>
+<p>Using your data X, you have to find a function F to predict the labels Y.</p>
+<p>The appearance of your function will strongly depend of the algorithm you used.</p>
+<p>Reshape the arrays for images so they have a standard matrix format (2 dimensions).<br />
+The labels part are called output, they are the numbers you need to predict.</p>
+<p>We are in a situation of supervised learning for multiclass predictions, meaning you have to predict 3 or more (among 10 different classes):</p>
+<ul>
+<li><p>choose (or create) a ML algorithm and a library to use it</p></li>
+<li><p>train your algorithm with <code>training sets images</code> and <code>training sets labels</code></p></li>
+<li><p>try your algorithm with <code>test set images</code> and compare its results with <code>test set labels</code></p></li>
+</ul>
+<p>You have to define a measurement of quality for your predictions. You might use accuracy, or any other metrics that you like, <strong>as long as you justify your choice</strong>.</p>
+<div class="warning">
+<p>ML libraries like <a href="https://scikit-learn.org/stable/user_guide.html">sklearn</a> may be useful, but be sure to understand the methods you used.<br />
+The different steps like preprocessing, testing, training and evaluating should be explicit in your project; parameters you have chosen and metrics you used should also be justified.</p>
+</div>
+<div class="tip">
+<p><code>KNN</code> is a basic and easy algorithm to understand.</p>
+</div>
+
+<h2 id="questions">Questions</h2>
+<p>Ask yourselves some questions, and try to find answers:</p>
+<ul>
+<li>Why use a separate dataset to measure the performance of an algorithm?<br />
+What are your results when you test your algorithm on the same dataset used in training?</li>
+</ul>
+<div class="quote">
+<p>It is easier to prevent bad habits than to break them.<br />
+ <br />
+<author>Benjamin Franklin</author></p>
+</div>
+<ul>
+<li><p>What are bias and variance?<br />
+What do they measure?<br />
+Which values should they take?</p></li>
+<li><p>What is cross validation?<br />
+What are the main advantages?<br />
+When can I use it?</p></li>
+</ul>
+<!--
+Cross validation is a  way for avoiding overfitting and it has two main advantages:
+
+ * It allows you to explore all your dataset for both train and test
+ * It gives you more confidence on your metric's evaluation.
+
+There are different ways to do cross-validation, you can explore the one you want.
+
+Be aware that cross-validation can be used in two cases:
+ 1. To evaluate the performance of a specific model, therefore the concept of test set is kind of irrelevant
+ 2. To apply parameter tuning, but you will still need a test set to evaluate your final model.
+
+-->
+<ul>
+<li>Can you explain why it’s important to normalize (scale) the data when using algos like <code>KNN</code>?<br />
+Is it necessary in our specific study case?</li>
+</ul>
+<div class="tip">
+<p>Try to preprocess your data, then build and test your algorithm again to see if there is any improvement.</p>
+</div>
+<!--
+:::tip
+The [preprocessing page of sklearn](https://scikit-learn.org/stable/modules/preprocessing.html
+::: may help you to choose an optimal normalization process.)
+-->
+<ul>
+<li>When you reshaped your image, do you think the order of the columns (that means the order of the pixels) had an importance for the performance of your algorithm?</li>
+</ul>
+<div class="tip">
+<p>Try to apply the same pixels permutation in all the images, then compare your score with previous one(s).If you look closely at Knn’s working, the answer should be clear.</p>
+</div>
+<ul>
+<li><p>Which metrics measure performance?<br />
+What does accuracy tell you?<br />
+Does accuracy penalize more one mistake over another?</p></li>
+<li><p>Can you give an explicit example where accuracy would not be a relevant metric?<br />
+In that extreme case, can you propose a more suitable metric?</p></li>
+<li><p>Do confusion matrix display all informations of algorithms’ learning?</p></li>
+<li><p>Do you want to have a walk in the <code>forest</code> and observe <code>tree</code> growth?</p></li>
+</ul>
+
+<h2 id="visualizations">Visualizations</h2>
+<p>Now you have one algorithm and its mesure of performance, let’s produce some visualizations and statistics:</p>
+<ul>
+<li>represent the percentage of misclassified examples for each digit ;</li>
+</ul>
+<div class="tip">
+<p>Think of every possible way to display your results</p>
+</div>
+<ul>
+<li><p>show misclassifications made by your algorithm for each digit ;</p></li>
+<li><p>plot a confusion matrix of your predictions ;</p></li>
+<li><p>elaborate on which class your algorithm performs well or poorly.</p></li>
+</ul>
+<p>Here is an example of the confusion matrix for our algorithm (<em>accuracy=67.2%</em>):</p>
+<table style="width:83%;">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">obs/pred</th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+<th style="text-align: right;">8</th>
+<th style="text-align: right;">9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">873</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1095</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">711</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">698</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">673</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">154</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">169</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">794</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">642</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">178</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">214</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">385</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">252</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">249</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">448</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unsupervised-learning">Unsupervised learning</h3>
+<p><em>UL</em> is a subsection of <em>ML</em>. It uses algos to explain the dynamics in some <strong>unlabelled data</strong>.</p>
+<p>As you might have noticed, it’s not the case in this project.<br />
+Yet, you can use UL to visualize your data in a clear way.<br />
+It’s often useful when you don’t have a clear goal.<br />
+It can be used to find clusters, reduce dimensions…</p>
+<div class="footer"></div>
+</body>
+</html>

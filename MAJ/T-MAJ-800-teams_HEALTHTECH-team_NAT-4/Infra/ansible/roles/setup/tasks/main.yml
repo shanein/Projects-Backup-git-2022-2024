@@ -1,0 +1,15 @@
+- name: Set motd
+  copy:
+    src: motd
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Template config to /etc/ssh/sshd_config
+  ansible.builtin.template:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644

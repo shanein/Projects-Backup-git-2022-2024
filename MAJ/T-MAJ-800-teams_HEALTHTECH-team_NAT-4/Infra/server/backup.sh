@@ -1,0 +1,2 @@
+docker exec 1f20b12620a3 /usr/bin/mysqldump -u root --password=EvIywzuuomR6u7quk673P7i83 HealthTech > backup.sql
+docker exec -i 9ca35c6aa878 /usr/bin/mongodump --username mongo --password M4s0HQ22YhzXWgQfqgtUyk0WL --authenticationDatabase admin --db HealthTech --out /dump
