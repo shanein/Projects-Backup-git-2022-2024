@@ -1,0 +1,19 @@
+FROM node:lts-alpine as develop
+# make the 'app' folder the current working directory
+WORKDIR /app_front
+# copy both 'package.json' and 'package-lock.json' (if available)
+COPY ./front/package*.json ./
+# install project dependencies
+RUN npm install
+# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY ./front .
+
+# build stage
+FROM develop as build
+RUN npm run build
+
+# production stage
+FROM nginx:1.15.7-alpine as prod
+COPY --from=build /app_front/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

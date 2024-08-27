@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile_API
+    image: htbernard/time-manager:phoenix
+    volumes:
+      - .:/app_back
+    ports:
+      - "4000:4000"
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: timedb
+      PGHOST: db
+      PGPORT: 5432
+    depends_on:
+      - db
+    command:
+      - "./entrypoint.sh"
+  db:
+    build: 
+      context: .
+      dockerfile: Dockerfile_BDD
+    image: htbernard/time-manager:postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - "postgres:/data/postgres"
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile_VUE
+      target: 'develop'
+    image: htbernard/time-manager:vue
+    ports:
+    - '80:8080'
+    volumes:
+    - '.:/front/app_front'
+    command: /bin/sh -c "npm run serve"
+
+volumes:
+  postgres:
