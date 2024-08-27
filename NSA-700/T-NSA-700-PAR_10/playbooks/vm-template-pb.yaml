@@ -1,0 +1,19 @@
+---
+- name: Create a VM from a template
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Clone the template
+    vmware_guest:
+      hostname: 192.198.111.10
+      username: prod-admin
+      password: THEprodAdmin!
+      validate_certs: False
+      name: debian_dist
+      template: debian-template
+      datacenter: DC1
+      folder: /DC1/vm
+      state: poweredon
+      wait_for_ip_address: yes
+      esxi_hostname: esxi_server

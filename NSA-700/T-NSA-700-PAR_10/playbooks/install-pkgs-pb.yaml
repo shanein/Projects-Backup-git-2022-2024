@@ -1,0 +1,29 @@
+- hosts: web
+  become: yes
+  tasks:
+  - name: "apt-get update"
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: "install nginx"
+    apt:
+      name: ['nginx']
+      state: latest
+
+  - name: "install php"
+    apt:
+      name: ['php8.1-fpm']
+      state: latest
+
+  - name: Installing Mysql  and dependencies
+    package:
+      name: "{{item}}"
+      state: latest
+      update_cache: yes
+    loop:
+      - mysql-server
+      - mysql-client 
+      - python3-mysqldb
+      - libmysqlclient-dev
+    become: yes

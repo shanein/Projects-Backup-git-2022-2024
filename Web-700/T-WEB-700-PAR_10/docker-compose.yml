@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile_API
+    image: htbernard/crypto-manager:phoenix
+    volumes:
+      - .:/app_back
+    ports:
+      - "4000:4000"
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: cryptodb
+      PGHOST: db
+      PGPORT: 5432
+    depends_on:
+      - db
+    command: bash ./entrypoint2.sh
+  db:
+    build: 
+      context: .
+      dockerfile: Dockerfile_BDD
+    image: htbernard/crypto-manager:postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - "postgres:/data/postgres"
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile_VUE
+      target: 'develop'
+    image: htbernard/time-manager:vue
+    ports:
+    - '8080:8080'
+    volumes:
+    - './apis/:/apis/app_front'
+    command: /bin/sh -c "npm run serve"
+
+volumes:
+  postgres:
